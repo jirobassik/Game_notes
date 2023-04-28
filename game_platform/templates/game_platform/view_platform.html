@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block style %}{% static 'game_platform/css/view.css' %}{% endblock %}
+
+{% block content_main %}
+    <div class="game-detail-container">
+        <div class="game-detail-card">
+            <h3>{{ platform.name }}</h3>
+            <hr>
+            <div class="game-detail-info">
+                <div class="game-detail-left">
+                    {% with description=platform.description %}
+                        {% if description %}
+                            <p><strong>Описание:</strong></p>
+                            <p>{{ description }}</p>
+                        {% else %}
+                            <p><strong>Описание:</strong> Нет</p>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

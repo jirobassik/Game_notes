@@ -1,0 +1,48 @@
+.game-detail-container {
+    margin: 20px;
+}
+
+.game-detail-card {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    background-color: #FFFFFF;
+}
+
+.game-detail-card h3 {
+    margin-top: 0px;
+    font-size: 32px;
+    color: #212529;
+}
+
+.game-detail-info {
+    display: flex;
+}
+
+.game-detail-left {
+    width: 60%;
+    margin-right: 20px;
+}
+
+.game-detail-right {
+    width: 40%;
+}
+
+.game-detail-left p, .game-detail-right p {
+    font-size: 18px;
+    color: #212529;
+}
+
+.game-detail-right input[type="checkbox"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 15px;
+}
+
+.form-group label {
+  display: inline-flex;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: #212529;
+}
+

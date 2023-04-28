@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block style %}{% static 'game/css/view.css' %}{% endblock %}
+
+{% block content_main %}
+    <div class="game-detail-container">
+        <div class="game-detail-card">
+            <h3>{{ game.name }}</h3>
+            <hr>
+            <div class="game-detail-info">
+                <div class="game-detail-left">
+                    {% with description=game.description %}
+                        {% if description %}
+                            <p><strong>Описание:</strong></p>
+                            <p>{{ description }}</p>
+                        {% else %}
+                            <p><strong>Описание:</strong> Нет</p>
+                        {% endif %}
+                    {% endwith %}
+                    {% with genre=game.genres.all %}
+                        {% if genre %}
+                            <p><strong>Жанры:</strong></p>
+                            <ul>
+                                {% for genre in genre %}
+                                    <li>{{ genre.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p><strong>Жанры:</strong> Не указаны</p>
+                        {% endif %}
+                    {% endwith %}
+                    {% with developer=game.developer %}
+                        <p><strong>Разработчик:</strong>
+                            {% if developer %}
+                                {{ developer }}
+                            {% else %}
+                                Не указан
+                            {% endif %}
+                        </p>
+                    {% endwith %}
+                    {% with publisher=game.publisher %}
+                        <p><strong>Издатель:</strong>
+                            {% if publisher %}
+                                {{ publisher }}
+                            {% else %}
+                                Не указан
+                            {% endif %}</p>
+                    {% endwith %}
+                </div>
+                <div class="game-detail-right">
+                    <p><strong>Игра куплена: </strong>
+                        {% if game.buy %} Да {% else %} Нет {% endif %}
+                    </p>
+                    <p><strong>Игра в бете: </strong>
+                        {% if game.beta %} Да {% else %} Нет {% endif %}
+                    </p>
+                    <p><strong>Игра пройдена: </strong>
+                        {% if game.passed %} Да {% else %} Нет {% endif %}
+                    </p>
+                    {% with game_price=game.gamepricemodel_set.all %}
+                        {% if game_price %}
+                            <p><strong>Цена игры:</strong></p>
+                            <ul>
+                                {% for price in game_price %}
+                                    <li>{{ price.name }}: {{ price.price }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p><strong>Цена игры:</strong> Не указаны</p>
+                        {% endif %}
+                    {% endwith %}
+                    {% with platform=game.game_platform.all %}
+                        {% if platform %}
+                            <p><strong>Платформы:</strong></p>
+                            <ul>
+                                {% for name_plat in platform %}
+                                    <li>{{ name_plat }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p><strong>Платформы:</strong> Не указаны</p>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
