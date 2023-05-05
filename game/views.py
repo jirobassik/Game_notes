@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from .models import GameModel
 from .forms import GameForm
 from genre.models import GameGenreModel
