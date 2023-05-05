@@ -1,14 +1,17 @@
-from django.forms import Form
+from django.forms import ModelForm
 from django import forms
+from genre.models import GameGenreModel
 
 
-class GameGenreForm(Form):
-    name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Название жанра',
-    }), label='Название жанра', required=True)
+class GenreForm(ModelForm):
 
-    description = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        'placeholder': 'Описание'
-    }), label='Описание', required=False)
+    class Meta:
+        model = GameGenreModel
+        fields = ['name', 'description', ]
+        widgets = {"name": forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Название жанра'
+        }), "description": forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Описание жанра'
+        }),}

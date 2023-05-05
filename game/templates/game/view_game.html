@@ -1,6 +1,5 @@
 {% extends 'layout.html' %}
 {% load static %}
-{% load custom_tag %}
 
 {% block style %}{% static 'game/css/view.css' %}{% endblock %}
 
@@ -19,13 +18,12 @@
                             <p><strong>Описание:</strong> Нет</p>
                         {% endif %}
                     {% endwith %}
-                    {% with genre=game.genres %}
+                    {% with genre=game.genres.all %}
                         {% if genre %}
                             <p><strong>Жанры:</strong></p>
                             <ul>
-                            {% view_genre genre as list_genres %}
-                                {% for genre in list_genres %}
-                                    <li>{{ genre }}</li>
+                                {% for genre in genre %}
+                                    <li>{{ genre.name }}</li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -60,8 +58,7 @@
                     <p><strong>Игра пройдена: </strong>
                         {% if game.passed %} Да {% else %} Нет {% endif %}
                     </p>
-                    {% view_price game.id as price %}
-                    {% with game_price=price %}
+                    {% with game_price=game.gamepricemodel_set.all %}
                         {% if game_price %}
                             <p><strong>Цена игры:</strong></p>
                             <ul>
@@ -73,12 +70,11 @@
                             <p><strong>Цена игры:</strong> Не указаны</p>
                         {% endif %}
                     {% endwith %}
-                    {% with platform=game.game_platform %}
+                    {% with platform=game.game_platform.all %}
                         {% if platform %}
                             <p><strong>Платформы:</strong></p>
                             <ul>
-                            {% view_platform platform as list_platforms %}
-                                {% for name_plat in list_platforms %}
+                                {% for name_plat in platform %}
                                     <li>{{ name_plat }}</li>
                                 {% endfor %}
                             </ul>
