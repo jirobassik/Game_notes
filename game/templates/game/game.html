@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
-{% load rest_framework %}
-{% load custom_tag %}
+
 {% block style %}{% static 'game/css/game.css' %}{% endblock %}
 
 {% block content_main %}
@@ -20,22 +19,19 @@
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">{{ game.name }}</h5>
+                            <h5 class="card-title">{{ game }}</h5>
                             <p class="card-text">{{ game.description|truncatewords:5 }}</p>
-                            {% view_genre game.genres as list_genres %}
-                            <p class="card-text"><small class="text-muted">
-                                {% for genre in list_genres %}
-                                    <span>{{ genre }}{% if not forloop.last %}, {% endif %}</span>
-                                {% endfor %}
-                            </small></p>
+                            {% for genre in game.genres.all %}
+                                <p class="card-text"><small class="text-muted">{{ genre }}</small></p>
+                            {% endfor %}
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                <a href="{% url 'game-delete' game.id %}" class="btn btn-outline-danger"><i
+                                <a href="{% url 'game-delete' game.pk %}" class="btn btn-outline-danger"><i
                                         class="bi bi-trash2-fill"></i></a>
-                                <a href="{% url 'game-edit' game.id %}" class="btn btn-outline-secondary"><i
+                                <a href="{% url 'game-edit' game.pk %}" class="btn btn-outline-secondary"><i
                                         class="bi bi-pencil-fill"></i></a>
-                                <a href="{% url 'game-view' game.id %}" class="btn btn-outline-secondary">Подробнее</a>
+                                <a href="{% url 'game-view' game.pk %}" class="btn btn-outline-secondary">Подробнее</a>
                             </div>
                         </div>
                     </div>
