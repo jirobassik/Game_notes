@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load custom_tag %}
 
 {% block style %}{% static 'game/css/view.css' %}{% endblock %}
 
@@ -18,12 +19,13 @@
                             <p><strong>Описание:</strong> Нет</p>
                         {% endif %}
                     {% endwith %}
-                    {% with genre=game.genres.all %}
+                    {% with genre=game.genres %}
                         {% if genre %}
                             <p><strong>Жанры:</strong></p>
                             <ul>
-                                {% for genre in genre %}
-                                    <li>{{ genre.name }}</li>
+                            {% view_genre genre as list_genres %}
+                                {% for genre in list_genres %}
+                                    <li>{{ genre }}</li>
                                 {% endfor %}
                             </ul>
                         {% else %}
@@ -70,11 +72,12 @@
                             <p><strong>Цена игры:</strong> Не указаны</p>
                         {% endif %}
                     {% endwith %}
-                    {% with platform=game.game_platform.all %}
+                    {% with platform=game.game_platform %}
                         {% if platform %}
                             <p><strong>Платформы:</strong></p>
                             <ul>
-                                {% for name_plat in platform %}
+                            {% view_platform platform as list_platforms %}
+                                {% for name_plat in list_platforms %}
                                     <li>{{ name_plat }}</li>
                                 {% endfor %}
                             </ul>

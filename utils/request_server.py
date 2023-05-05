@@ -1,38 +1,43 @@
-import io
-
 import requests
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer
-
-from game.models import GameModel
-from game.serializers import GameSerializer
 
 
-def get_request():
-    request_data = requests.get('http://127.0.0.1:8001/api/v1/games/')
-    return request_data.content
+class Request:
+    def __init__(self, model_name: str):
+        self.__model_name = model_name
 
+    @classmethod
+    def game_model(cls):
+        return cls('games')
 
-def delete_request(id):
-    requests.delete(f'http://127.0.0.1:8001/api/v1/games/{id}/')
+    @classmethod
+    def genre_model(cls):
+        return cls('genre')
 
+    @classmethod
+    def platform_model(cls):
+        return cls('platform')
 
-def encode():
-    model = GameModel('Angelina Jolie', 'Content: Angelina Jolie')
-    model_sr = GameSerializer(model)
-    print(model_sr.data, type(model_sr.data), sep='\n')
-    json = JSONRenderer().render(model_sr.data)
-    print(json, type(json), sep='\n')
+    @classmethod
+    def price_model(cls):
+        return cls('price')
 
+    def get_request(self):
+        return requests.get(f'http://127.0.0.1:8001/api/v1/{self.model_name}/').content
 
-def decode():
-    raw_data = get_request()
-    print(raw_data)
-    stream = io.BytesIO(raw_data)
-    data = JSONParser().parse(stream)
-    print('data', data)
-    serializer = GameSerializer(data=data, many=True)
-    print(serializer.is_valid(raise_exception=False))
-    print(serializer.errors)
-    print('serialize data', serializer.validated_data)
-    return serializer.validated_data
+    def detail_get_request(self, id):
+        return requests.get(f'http://127.0.0.1:8001/api/v1/{self.model_name}/{id}/').content
+
+    def post_request(self, data: dict):
+        requests.post(f'http://127.0.0.1:8001/api/v1/{self.model_name}/', data=data,
+                      headers={'Content-Type': 'application/json'})
+
+    def put_request(self, data, id):
+        requests.put(f'http://127.0.0.1:8001/api/v1/{self.model_name}/{id}/', data=data,
+                     headers={'Content-Type': 'application/json'})
+
+    def delete_request(self, id):
+        requests.delete(f'http://127.0.0.1:8001/api/v1/{self.model_name}/{id}/')
+
+    @property
+    def model_name(self):
+        return self.__model_name

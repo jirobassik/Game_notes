@@ -1,30 +1,12 @@
 from rest_framework import serializers
-from genre.serializers import GenreSerializer
-from game_platform.serializers import GamePlatformSerializer
 from django import forms
 
 
 class GameSerializer(serializers.Serializer):
-    # id = serializers.IntegerField(required=True)
-    # name = serializers.CharField(max_length=70, allow_null=False, allow_blank=False,
-    #                              style={'placeholder': 'Название игры', 'class': 'form-control'})
-    # description = serializers.CharField(max_length=255, allow_null=True, allow_blank=True,
-    #                                     style={'placeholder': 'Описание', 'class': 'form-control'})
-    # buy = serializers.BooleanField(default=False, help_text='Куплена игра или нет', )
-    # beta = serializers.BooleanField(default=False, help_text='Игра находится в бета тестировании или нет')
-    # passed = serializers.BooleanField(default=False, help_text='Игра пройдена или нет')
-    # publisher = serializers.CharField(max_length=70, allow_null=True, allow_blank=True,
-    #                                   style={'placeholder': 'Издатель', 'class': 'form-control'})
-    # developer = serializers.CharField(max_length=70, allow_null=True, allow_blank=True,
-    #                                   style={'placeholder': 'Разработчик', 'class': 'form-control'})
-    # genres = serializers.ListField(child=serializers.IntegerField(), required=False,
-    #                                style={'placeholder': 'Жанры', 'class': 'form-control'})
-    # game_platform = serializers.ListField(child=serializers.IntegerField(), required=False,
-    #                                       style={'placeholder': 'Платформы', 'class': 'form-control'})
-
-    id = serializers.IntegerField(required=True)
-    name = serializers.CharField(max_length=70, allow_null=False, allow_blank=False,
-                                 style={'placeholder': 'Email', 'autofocus': True})
+    id = serializers.IntegerField(required=False, write_only=True)
+    name = serializers.CharField(max_length=70, allow_null=False, allow_blank=False, label='Название игры',
+                                 style={'autofocus': True, 'class': 'form-control', 'placeholder': 'Название игры',
+                                        'label': 'Название игры'})
     description = serializers.CharField(max_length=255, allow_null=True, allow_blank=True, )
     buy = serializers.BooleanField(default=False, help_text='Куплена игра или нет', )
     beta = serializers.BooleanField(default=False, help_text='Игра находится в бета тестировании или нет')
@@ -63,20 +45,3 @@ class GameSerializer(serializers.Serializer):
                 'all': ('game/css/create.css',)
             }
         )
-    # --
-    # genres = GenreSerializer(many=True, read_only=True)
-    # game_platform = GamePlatformSerializer(many=True, read_only=True)
-    # --
-    # genres = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    # game_platform = serializers.ListField(child=serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
-
-'''    name = models.CharField("Название игры", max_length=70, unique=True, null=False, blank=False, db_index=True)
-    description = models.TextField("Описание", max_length=255, null=True, blank=True)
-    buy = models.BooleanField("Куплена", default=False, help_text="Куплена игра или нет")
-    beta = models.BooleanField("Игра в бете", default=False, help_text="Игра находится в бета тестировании или нет")
-    passed = models.BooleanField("Игра пройдена", default=False, help_text="Игра пройдена или нет")
-    publisher = models.CharField("Издатель", max_length=70, null=True, blank=True)
-    developer = models.CharField("Разработчик", max_length=70, null=True, blank=True)
-    genres = models.ManyToManyField(GameGenreModel, blank=True)
-    game_platform = models.ManyToManyField(GamePlatformModel, blank=True)'''

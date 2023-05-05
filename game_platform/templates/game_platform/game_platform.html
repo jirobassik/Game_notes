@@ -8,27 +8,27 @@
         <h1>Платформы</h1>
         <br>
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            <a href="{% url 'create-platform' %}" class="add-card">
-                <div class="card h-100">
-                    <div class="card-body d-flex align-items-center justify-content-center">
-                        <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
-                    </div>
-                </div>
-            </a>
+{#            <a href="{% url 'create-platform' %}" class="add_game-card">#}
+{#                <div class="card h-100">#}
+{#                    <div class="card-body d-flex align-items-center justify-content-center">#}
+{#                        <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </a>#}
             {% for platform in platforms %}
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">{{ platform }}</h5>
+                            <h5 class="card-title">{{ platform.name }}</h5>
                             <p class="card-text">{{ platform.description|truncatewords:20 }}</p>
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                <a href="{% url 'platform-delete' platform.pk %}" class="btn btn-outline-danger"><i
+                                <a href="{% url 'platform-delete' platform.id %}" class="btn btn-outline-danger"><i
                                         class="bi bi-trash2-fill"></i></a>
-                                <a href="{% url 'platform-edit' platform.pk %}" class="btn btn-outline-secondary"><i
-                                        class="bi bi-pencil-fill"></i></a>
-                                <a href="{% url 'platform-view' platform.pk %}" class="btn btn-outline-secondary">Подробнее</a>
+{#                                <a href="{% url 'platform-edit_game' platform.pk %}" class="btn btn-outline-secondary"><i#}
+{#                                        class="bi bi-pencil-fill"></i></a>#}
+{#                                <a href="{% url 'platform-view_game' platform.pk %}" class="btn btn-outline-secondary">Подробнее</a>#}
                             </div>
                         </div>
                     </div>
