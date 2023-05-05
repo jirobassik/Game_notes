@@ -60,7 +60,8 @@
                     <p><strong>Игра пройдена: </strong>
                         {% if game.passed %} Да {% else %} Нет {% endif %}
                     </p>
-                    {% with game_price=game.gamepricemodel_set.all %}
+                    {% view_price game.id as price %}
+                    {% with game_price=price %}
                         {% if game_price %}
                             <p><strong>Цена игры:</strong></p>
                             <ul>

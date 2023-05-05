@@ -1,25 +1,10 @@
 from rest_framework import serializers
+from djmoney.contrib.django_rest_framework import MoneyField
 
-
-class GameSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(required=True)
+class GamePriceSerializer(serializers.Serializer):
+    id = serializers.IntegerField(required=False, write_only=True)
     name = serializers.CharField(max_length=70, allow_null=False, allow_blank=False)
-    description = serializers.CharField(max_length=255, allow_null=True, allow_blank=True)
-    buy = serializers.BooleanField(default=False, help_text='Куплена игра или нет')
-    beta = serializers.BooleanField(default=False, help_text='Игра находится в бета тестировании или нет')
-    passed = serializers.BooleanField(default=False, help_text='Игра пройдена или нет')
-    publisher = serializers.CharField(max_length=70, allow_null=True, allow_blank=True)
-    developer = serializers.CharField(max_length=70, allow_null=True, allow_blank=True)
-    genres = serializers.ListField(child=serializers.PrimaryKeyRelatedField(many=True, read_only=True))
-    game_platform = serializers.ListField(child=serializers.PrimaryKeyRelatedField(many=True, read_only=True))
+    price = MoneyField(max_digits=10, decimal_places=2, default_currency="USD",)
+    game = serializers.IntegerField(required=True)
+    price_currency = serializers.CharField(allow_null=True, allow_blank=True, required=False)
 
-
-'''    name = models.CharField("Название игры", max_length=70, unique=True, null=False, blank=False, db_index=True)
-    description = models.TextField("Описание", max_length=255, null=True, blank=True)
-    buy = models.BooleanField("Куплена", default=False, help_text="Куплена игра или нет")
-    beta = models.BooleanField("Игра в бете", default=False, help_text="Игра находится в бета тестировании или нет")
-    passed = models.BooleanField("Игра пройдена", default=False, help_text="Игра пройдена или нет")
-    publisher = models.CharField("Издатель", max_length=70, null=True, blank=True)
-    developer = models.CharField("Разработчик", max_length=70, null=True, blank=True)
-    genres = models.ManyToManyField(GameGenreModel, blank=True)
-    game_platform = models.ManyToManyField(GamePlatformModel, blank=True)'''

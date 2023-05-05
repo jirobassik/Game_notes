@@ -5,7 +5,7 @@ from genre.serializers import GenreSerializer
 from game_platform.models import GamePlatformModel
 from game_platform.serializers import GamePlatformSerializer
 
-from utils.tuple_converter import convert_tuple
+from utils.converter_remove import convert_tuple
 from utils.request_server import Request
 from utils.json_serializer import JsonSerializer
 

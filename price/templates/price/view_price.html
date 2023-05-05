@@ -1,12 +1,14 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load custom_tag_price %}
 
 {% block style %}{% static 'game/css/view.css' %}{% endblock %}
 
 {% block content_main %}
     <div class="game-detail-container">
         <div class="game-detail-card">
-            <h3>{{ price.game }}</h3>
+            {% view_games price.game as name_game %}
+            <h3>{{ name_game }}</h3>
             <hr>
             <div class="game-detail-info">
                 <div class="game-detail-left">

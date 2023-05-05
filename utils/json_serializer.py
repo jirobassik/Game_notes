@@ -9,31 +9,19 @@ class JsonSerializer:
 
     def encode(self, **kwargs):
         model = self.model(**kwargs)
-        print('model', model)
         model_sr = self.model_serializer(model)
-        print('model_sr', model_sr.data, type(model_sr.data), sep='\n')
-        json_ = JSONRenderer().render(model_sr.data)
-        print('json', json_, type(json_), sep='\n')
-        return json_
+        return JSONRenderer().render(model_sr.data)
 
     def decode(self, raw_data):
-        print(raw_data)
         stream = BytesIO(raw_data)
         data = JSONParser().parse(stream)
-        print('data', data)
         serializer = self.model_serializer(data=data, many=True)
-        print(serializer.is_valid(raise_exception=False))
-        print(serializer.errors)
-        print('serialize data', serializer.validated_data)
+        serializer.is_valid(raise_exception=False)
         return serializer.validated_data
 
     def detail_decode(self, raw_data):
-        print(raw_data)
         stream = BytesIO(raw_data)
         data = JSONParser().parse(stream)
-        print('data', data)
         serializer = self.model_serializer(data=data)
-        print(serializer.is_valid(raise_exception=False))
-        print(serializer.errors)
-        print('serialize data', serializer.validated_data)
+        serializer.is_valid(raise_exception=False)
         return serializer.validated_data
