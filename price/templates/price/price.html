@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load static %}
+{% load custom_tag_price %}
 
 {% block style %}{% static 'price/css/price.css' %}{% endblock %}
 
@@ -19,16 +20,17 @@
                 <div class="col">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">{{ price.game }}</h5>
+                            {% view_games price.game as name_game %}
+                            <h5 class="card-title">{{ name_game }}</h5>
                             <p class="card-text">{{ price.name }}: {{ price.price }}</p>
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
-                                <a href="{% url 'price-delete' price.pk %}" class="btn btn-outline-danger"><i
+                                <a href="{% url 'price-delete' price.id %}" class="btn btn-outline-danger"><i
                                         class="bi bi-trash2-fill"></i></a>
-                                <a href="{% url 'price-edit' price.pk %}" class="btn btn-outline-secondary"><i
+                                <a href="{% url 'price-edit' price.id %}" class="btn btn-outline-secondary"><i
                                         class="bi bi-pencil-fill"></i></a>
-                                <a href="{% url 'price-view' price.pk %}" class="btn btn-outline-secondary">Подробнее</a>
+                                <a href="{% url 'price-view' price.id %}" class="btn btn-outline-secondary">Подробнее</a>
                             </div>
                         </div>
                     </div>

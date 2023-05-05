@@ -1,18 +1,14 @@
-from django.forms import ModelForm
+from django.forms import Form
 from django import forms
-from game_platform.models import GamePlatformModel
 
 
-class GamePlatformForm(ModelForm):
-    class Meta:
-        model = GamePlatformModel
-        fields = ['name', 'description', ]
+class GamePlatformForm(Form):
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Название платформы',
+    }), label='Название игры', required=True)
 
-        widgets = {"name": forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Название игры'
-        }), "description": forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Описание'
-        }),
-        }
+    description = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Описание'
+    }), label='Описание', required=False)
