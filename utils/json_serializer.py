@@ -12,16 +12,9 @@ class JsonSerializer:
         model_sr = self.model_serializer(model)
         return JSONRenderer().render(model_sr.data)
 
-    def decode(self, raw_data):
+    def decode(self, raw_data, many=True):
         stream = BytesIO(raw_data)
         data = JSONParser().parse(stream)
-        serializer = self.model_serializer(data=data, many=True)
-        serializer.is_valid(raise_exception=False)
-        return serializer.validated_data
-
-    def detail_decode(self, raw_data):
-        stream = BytesIO(raw_data)
-        data = JSONParser().parse(stream)
-        serializer = self.model_serializer(data=data)
+        serializer = self.model_serializer(data=data, many=many)
         serializer.is_valid(raise_exception=False)
         return serializer.validated_data

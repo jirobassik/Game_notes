@@ -13,16 +13,18 @@ genre_json_serializer = JsonSerializer(GameGenreModel, GenreSerializer)
 genre_request = Request.genre_model()
 
 
+def serialize_genre_form(form):
+    return genre_json_serializer.encode(name=form.cleaned_data['name'],
+                                        description=form.cleaned_data['description'], )
+
+
 def add_genre(request):
     if request.method == 'POST':
         form = GameGenreForm(request.POST)
         if form.is_valid():
-            serializer_data = genre_json_serializer.encode(name=form.cleaned_data['name'],
-                                                           description=form.cleaned_data['description'], )
-
+            serializer_data = serialize_genre_form(form)
             genre_request.post_request(serializer_data)
         return HttpResponseRedirect(reverse('genre'))
-
     else:
         form = GameGenreForm()
     return render(request, 'genre/create_genre.html', {'form': form})
@@ -30,13 +32,11 @@ def add_genre(request):
 
 def edit_genre(request, pk=None):
     raw_data_platform = genre_request.detail_get_request(pk)
-    queryset_platform = genre_json_serializer.detail_decode(raw_data_platform)
+    queryset_platform = genre_json_serializer.decode(raw_data_platform, many=False)
     if request.method == 'POST':
         form = GameGenreForm(request.POST)
         if form.is_valid():
-            serializer_data = genre_json_serializer.encode(name=form.cleaned_data['name'],
-                                                           description=form.cleaned_data['description'], )
-
+            serializer_data = serialize_genre_form(form)
             genre_request.put_request(serializer_data, pk)
         return HttpResponseRedirect(reverse('genre'))
     else:
@@ -52,8 +52,8 @@ def view_genres(request):
 
 def detail_view_genres(request, pk=None):
     raw_data = genre_request.detail_get_request(pk)
-    queryset = genre_json_serializer.detail_decode(raw_data)
-    return render(request, 'genre/view_genre.html', {'platform': queryset})
+    queryset = genre_json_serializer.decode(raw_data, many=False)
+    return render(request, 'genre/view_genre.html', {'genre': queryset})
 
 
 def delete_genre(request, pk=None):

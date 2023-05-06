@@ -11,6 +11,6 @@ game_request = Request.game_model()
 
 @register.simple_tag
 def view_games(game_id: int):
-    dict_id_genres = game_json_serializer.detail_decode(game_request.detail_get_request(game_id))
+    dict_id_genres = game_json_serializer.decode(game_request.detail_get_request(game_id), many=False)
     return dict_id_genres.get('name')
 

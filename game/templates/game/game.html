@@ -2,6 +2,7 @@
 {% load static %}
 {% load rest_framework %}
 {% load custom_tag %}
+{% load cache %}
 {% block style %}{% static 'game/css/game.css' %}{% endblock %}
 
 {% block content_main %}
@@ -10,11 +11,13 @@
         <br>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <a href="{% url 'create-game' %}" class="add-card">
-                <div class="card h-100">
-                    <div class="card-body d-flex align-items-center justify-content-center">
-                        <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
+                {% cache 500 create %}
+                    <div class="card h-100">
+                        <div class="card-body d-flex align-items-center justify-content-center">
+                            <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
+                        </div>
                     </div>
-                </div>
+                {% endcache %}
             </a>
             {% for game in games %}
                 <div class="col">

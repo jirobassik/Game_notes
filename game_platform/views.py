@@ -12,16 +12,18 @@ platform_json_serializer = JsonSerializer(GamePlatformModel, GamePlatformSeriali
 platform_request = Request.platform_model()
 
 
+def serialize_platform_form(form):
+    return platform_json_serializer.encode(name=form.cleaned_data['name'],
+                                           description=form.cleaned_data['description'], )
+
+
 def add_platform(request):
     if request.method == 'POST':
         form = GamePlatformForm(request.POST)
         if form.is_valid():
-            serializer_data = platform_json_serializer.encode(name=form.cleaned_data['name'],
-                                                              description=form.cleaned_data['description'], )
-
+            serializer_data = serialize_platform_form(form)
             platform_request.post_request(serializer_data)
         return HttpResponseRedirect(reverse('platform'))
-
     else:
         form = GamePlatformForm()
     return render(request, 'game_platform/create_platform.html', {'form': form})
@@ -29,16 +31,13 @@ def add_platform(request):
 
 def edit_platform(request, pk=None):
     raw_data_platform = platform_request.detail_get_request(pk)
-    queryset_platform = platform_json_serializer.detail_decode(raw_data_platform)
+    queryset_platform = platform_json_serializer.decode(raw_data_platform, many=False)
     if request.method == 'POST':
         form = GamePlatformForm(request.POST)
         if form.is_valid():
-            serializer_data = platform_json_serializer.encode(name=form.cleaned_data['name'],
-                                                              description=form.cleaned_data['description'], )
-
+            serializer_data = serialize_platform_form(form)
             platform_request.put_request(serializer_data, pk)
         return HttpResponseRedirect(reverse('platform'))
-
     else:
         form = GamePlatformForm(initial=queryset_platform)
     return render(request, 'game_platform/edit_platform.html', {'form': form})
@@ -46,7 +45,7 @@ def edit_platform(request, pk=None):
 
 def detail_view_platform(request, pk=None):
     raw_data = platform_request.detail_get_request(pk)
-    queryset = platform_json_serializer.detail_decode(raw_data)
+    queryset = platform_json_serializer.decode(raw_data, many=False)
     return render(request, 'game_platform/view_platform.html', {'platform': queryset})
 
 

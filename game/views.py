@@ -15,19 +15,23 @@ game_request = Request.game_model()
 genre_request = Request.genre_model()
 
 
+def serialize_game_form(form):
+    return game_json_serializer.encode(name=form.cleaned_data['name'],
+                                       description=form.cleaned_data['description'],
+                                       publisher=form.cleaned_data['publisher'],
+                                       developer=form.cleaned_data['developer'],
+                                       genres=form.cleaned_data['genres'],
+                                       game_platform=form.cleaned_data['game_platform'],
+                                       buy=form.cleaned_data['buy'],
+                                       beta=form.cleaned_data['beta'],
+                                       passed=form.cleaned_data['passed'])
+
+
 def add_game(request):
     if request.method == 'POST':
         form = GameForm(request.POST)
         if form.is_valid():
-            serializer_data = game_json_serializer.encode(name=form.cleaned_data['name'],
-                                                          description=form.cleaned_data['description'],
-                                                          publisher=form.cleaned_data['publisher'],
-                                                          developer=form.cleaned_data['developer'],
-                                                          genres=form.cleaned_data['genres'],
-                                                          game_platform=form.cleaned_data['game_platform'],
-                                                          buy=form.cleaned_data['buy'],
-                                                          beta=form.cleaned_data['beta'],
-                                                          passed=form.cleaned_data['passed'])
+            serializer_data = serialize_game_form(form)
             game_request.post_request(serializer_data)
             return HttpResponseRedirect(reverse('game'))
     else:
@@ -43,25 +47,17 @@ def view_game(request):
 
 def detail_view_game(request, pk=None):
     raw_data = game_request.detail_get_request(pk)
-    queryset = game_json_serializer.detail_decode(raw_data)
+    queryset = game_json_serializer.decode(raw_data, many=False)
     return render(request, 'game/view_game.html', {'game': queryset})
 
 
 def edit_game(request, pk=None):
     raw_data = game_request.detail_get_request(pk)
-    queryset = game_json_serializer.detail_decode(raw_data)
+    queryset = game_json_serializer.decode(raw_data, many=False)
     if request.method == 'POST':
         form = GameForm(request.POST)
         if form.is_valid():
-            serializer_data = game_json_serializer.encode(name=form.cleaned_data['name'],
-                                                          description=form.cleaned_data['description'],
-                                                          publisher=form.cleaned_data['publisher'],
-                                                          developer=form.cleaned_data['developer'],
-                                                          genres=form.cleaned_data['genres'],
-                                                          game_platform=form.cleaned_data['game_platform'],
-                                                          buy=form.cleaned_data['buy'],
-                                                          beta=form.cleaned_data['beta'],
-                                                          passed=form.cleaned_data['passed'])
+            serializer_data = serialize_game_form(form)
             game_request.put_request(serializer_data, pk)
             return HttpResponseRedirect(reverse('game'))
     else:

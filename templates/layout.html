@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -19,12 +20,14 @@
 </head>
 <body>
 <main>
+    {% cache 500 sidebar %}
     <div class="topnav">
         <a href="{% url 'game' %}">Игры</a>
         <a href="{% url 'genre' %}">Жанры</a>
         <a href="{% url 'platform' %}">Платформы</a>
         <a href="{% url 'price' %}">Цена</a>
     </div>
+    {% endcache %}
     {% block content_main %}
     {% endblock %}
 </main>

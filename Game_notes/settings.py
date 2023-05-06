@@ -74,17 +74,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Game_notes.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'g_notes',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+CACHES = {
+    "default": {
+        "BACKEND":
+            "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "D:/Programs/PyCharm 2021.3.3/Game_notes/site_cache"
     }
 }
 
@@ -115,10 +109,13 @@ LOGGING = {
             "class": "logging.FileHandler",
             "filename": "server.log",
         },
+        "console": {
+            "class": "logging.StreamHandler",
+        },
     },
     "loggers": {
         "django": {
-            "handlers": ["file"],
+            "handlers": ["file", "console"],
             "level": "INFO",
             "propagate": True,
         },
