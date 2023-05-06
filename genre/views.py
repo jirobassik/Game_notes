@@ -3,14 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .forms import GameGenreForm
-from genre.models import GameGenreModel
-
-from utils.request_server import Request
-from utils.json_serializer import JsonSerializer
-from .serializers import GenreSerializer
-
-genre_json_serializer = JsonSerializer(GameGenreModel, GenreSerializer)
-genre_request = Request.genre_model()
+from utils.init_json_ser_req import genre_json_serializer, genre_request
 
 
 def serialize_genre_form(form):

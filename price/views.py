@@ -2,15 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import GamePriceModel
 from .forms import PriceForm
-from utils.request_server import Request
-from utils.json_serializer import JsonSerializer
 from utils.converter_remove import remove_dollar
-from .serializers import GamePriceSerializer
-
-price_json_serializer = JsonSerializer(GamePriceModel, GamePriceSerializer)
-price_request = Request.price_model()
+from utils.init_json_ser_req import price_json_serializer, price_request
 
 
 def serialize_price_form(form):

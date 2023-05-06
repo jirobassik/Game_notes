@@ -1,15 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import GamePlatformModel
 from .forms import GamePlatformForm
 
-from utils.request_server import Request
-from utils.json_serializer import JsonSerializer
-from .serializers import GamePlatformSerializer
-
-platform_json_serializer = JsonSerializer(GamePlatformModel, GamePlatformSerializer)
-platform_request = Request.platform_model()
+from utils.init_json_ser_req import platform_json_serializer, platform_request
 
 
 def serialize_platform_form(form):

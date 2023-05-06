@@ -1,16 +1,10 @@
 from django import template
-from utils.json_serializer import JsonSerializer
-from utils.request_server import Request
-from game.models import GameModel
-from game.serializers import GameSerializer
+from utils.init_json_ser_req import game_json_serializer, game_request
 
 register = template.Library()
-game_json_serializer = JsonSerializer(GameModel, GameSerializer)
-game_request = Request.game_model()
 
 
 @register.simple_tag
 def view_games(game_id: int):
     dict_id_genres = game_json_serializer.decode(game_request.detail_get_request(game_id), many=False)
     return dict_id_genres.get('name')
-
