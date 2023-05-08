@@ -23,7 +23,7 @@
                         {% if genre %}
                             <p><strong>Жанры:</strong></p>
                             <ul>
-                            {% view_genre genre as list_genres %}
+                                {% view_genre genre as list_genres %}
                                 {% for genre in list_genres %}
                                     <li>{{ genre }}</li>
                                 {% endfor %}
@@ -77,7 +77,7 @@
                         {% if platform %}
                             <p><strong>Платформы:</strong></p>
                             <ul>
-                            {% view_platform platform as list_platforms %}
+                                {% view_platform platform as list_platforms %}
                                 {% for name_plat in list_platforms %}
                                     <li>{{ name_plat }}</li>
                                 {% endfor %}

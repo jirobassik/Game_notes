@@ -25,12 +25,16 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ game.name }}</h5>
                             <p class="card-text">{{ game.description|truncatewords:5 }}</p>
-                            {% view_genre game.genres as list_genres %}
-                            <p class="card-text"><small class="text-muted">
-                                {% for genre in list_genres %}
-                                    <span>{{ genre }}{% if not forloop.last %}, {% endif %}</span>
-                                {% endfor %}
-                            </small></p>
+                            {% with game_genres=game.genres %}
+                                {% if game_genres %}
+                                    {% view_genre game_genres as list_genres %}
+                                    <p class="card-text"><small class="text-muted">
+                                        {% for genre in list_genres %}
+                                            <span>{{ genre }}{% if not forloop.last %}, {% endif %}</span>
+                                        {% endfor %}
+                                    </small></p>
+                                {% endif %}
+                            {% endwith %}
                         </div>
                         <div class="card-footer">
                             <div class="btn-group">
