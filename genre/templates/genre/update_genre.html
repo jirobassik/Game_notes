@@ -4,7 +4,7 @@
     {% for field in form %}
         {{ field.label_tag }}  {{ field }} <span class="errorlist">{{ field.errors }}</span>
     {% endfor %}
-    <button hx-post="{% url 'genre_view_game_edit' pk %}" hx-target="#game_view" class="btn btn-success" type="submit">
+    <button hx-post="{% url 'genre-edit' pk %}" hx-target="#game_view" class="btn btn-success" type="submit">
         Изменить жанр
     </button>
 </form>

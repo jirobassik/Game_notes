@@ -1,45 +1,42 @@
-{% extends 'layout.html' %}
 {% load cache %}
 {% load static %}
 {% load custom_tag_price %}
 
-{% block style %}{% static 'price/css/price.css' %}{% endblock %}
-
-{% block content_main %}
-    <div class="container">
-        <h1>Цены</h1>
-        <br>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <a href="{% url 'create-price' %}" class="add-card">
-                {% cache 500 create %}
-                    <div class="card h-100">
-                        <div class="card-body d-flex align-items-center justify-content-center">
-                            <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
-                        </div>
+<div class="container">
+    <h1>Цены</h1>
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <a hx-get="{% url 'create-price' %}" hx-target="#game_view" class="add-card">
+            {% cache 500 create %}
+                <div class="card h-100">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
                     </div>
-                {% endcache %}
-            </a>
-            {% for price in prices %}
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            {% view_games price.game as name_game %}
-                            <h5 class="card-title">{{ name_game }}</h5>
-                            <p class="card-text">{{ price.name }}: {{ price.price }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group">
-                                <a href="{% url 'price-delete' price.id %}" class="btn btn-outline-danger"><i
-                                        class="bi bi-trash2-fill"></i></a>
-                                <a href="{% url 'price-edit' price.id %}" class="btn btn-outline-secondary"><i
-                                        class="bi bi-pencil-fill"></i></a>
-                                <a href="{% url 'price-view' price.id %}"
-                                   class="btn btn-outline-secondary">Подробнее</a>
-                            </div>
+                </div>
+            {% endcache %}
+        </a>
+        {% for price in prices %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        {% view_games price.game as name_game %}
+                        <h5 class="card-title">{{ name_game }}</h5>
+                        <p class="card-text">{{ price.name }}: {{ price.price }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group">
+                            <a hx-delete="{% url 'price-delete' price.id %}" hx-target="#game_view"
+                               class="btn btn-outline-danger"><i
+                                    class="bi bi-trash2-fill"></i></a>
+                            <a hx-get="{% url 'price-edit' price.id %}" hx-target="#game_view"
+                               class="btn btn-outline-secondary"><i
+                                    class="bi bi-pencil-fill"></i></a>
+                            <a hx-get="{% url 'price-view' price.id %}" hx-target="#game_view"
+                               class="btn btn-outline-secondary">Подробнее</a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
-{% endblock %}
+</div>

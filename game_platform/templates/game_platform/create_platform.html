@@ -1,17 +1,11 @@
-{% extends 'layout.html' %}
-
 {% load static %}
 
-{% block title %}Добавление Платформы{{ title }}{% endblock %}
-{% block style %}{% static 'game_platform/css/create.css' %}{% endblock %}
 
-{% block content_main %}
-        <form method="POST" class="game-form">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                {{ field.label_tag }}  {{ field }} <span class="errorlist">{{ field.errors }}</span>
-            {% endfor %}
-            <button class="btn btn-success" type="submit">Добавить платформу</button>
-        </form>
-{% endblock %}
+<form hx-post="{% url 'create-platform' %}" hx-target="#game_view" method="POST" class="game-form">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        {{ field.label_tag }}  {{ field }} <span class="errorlist">{{ field.errors }}</span>
+    {% endfor %}
+    <button class="btn btn-success" type="submit">Добавить платформу</button>
+</form>

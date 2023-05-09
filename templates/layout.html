@@ -26,14 +26,14 @@
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <main>
-{#    {% cache 500 sidebar %}#}
+    {% cache 500 sidebar %}
     <div class="topnav">
         <a href="/" hx-get="{% url 'game' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Игры</a>
-        <a href="genre/" hx-get="{% url 'genre_view_game' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Жанры</a>
-        <a href="{% url 'platform' %}">Платформы</a>
-        <a href="{% url 'price' %}">Цена</a>
+        <a href="/" hx-get="{% url 'genre' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Жанры</a>
+        <a href="/" hx-get="{% url 'platform' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Платформы</a>
+        <a href="/" hx-get="{% url 'price' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Цена</a>
     </div>
-{#    {% endcache %}#}
+    {% endcache %}
     {% block content_main %}
     {% endblock %}
 </main>

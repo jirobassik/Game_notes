@@ -24,9 +24,9 @@
                     </div>
                     <div class="card-footer">
                         <div class="btn-group">
-                            <a hx-delete="{% url 'genre_view_game_delete' genre.id %}" hx-target="#game_view" class="btn btn-outline-danger"><i
+                            <a hx-delete="{% url 'genre-delete' genre.id %}" hx-target="#game_view" class="btn btn-outline-danger"><i
                                     class="bi bi-trash2-fill"></i></a>
-                            <a hx-get="{% url 'genre_view_game_edit' genre.id %}" hx-target="#game_view" class="btn btn-outline-secondary"><i
+                            <a hx-get="{% url 'genre-edit' genre.id %}" hx-target="#game_view" class="btn btn-outline-secondary"><i
                                     class="bi bi-pencil-fill"></i></a>
                             <a hx-get="{% url 'genre-view' genre.id %}" hx-target="#game_view" class="btn btn-outline-secondary">Подробнее</a>
                         </div>

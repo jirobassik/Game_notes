@@ -20,5 +20,5 @@ def view_platform(list_platform_id: list) -> list:
 
 @register.simple_tag
 def view_price(game_id: str) -> list:
-    price = dict(convert_tuple_price(price_json_serializer.decode(price_request.get_request())))
-    return [price[price_game_id] for price_game_id in price if price_game_id == game_id]
+    price = convert_tuple_price(price_json_serializer.decode(price_request.get_request()))
+    return [price_tuple for price_game_id, price_tuple in price if price_game_id == game_id]

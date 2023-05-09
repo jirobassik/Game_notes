@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
 from .forms import GamePlatformForm
 
 from utils.init_json_ser_req import platform_json_serializer, platform_request
@@ -17,7 +15,9 @@ def add_platform(request):
         if form.is_valid():
             serializer_data = serialize_platform_form(form)
             platform_request.post_request(serializer_data)
-        return HttpResponseRedirect(reverse('platform'))
+            raw_data_platform = platform_request.get_request()
+            queryset_platform = platform_json_serializer.decode(raw_data_platform)
+            return render(request, 'game_platform/game_platform.html', {'platforms': queryset_platform})
     else:
         form = GamePlatformForm()
     return render(request, 'game_platform/create_platform.html', {'form': form})
@@ -31,10 +31,12 @@ def edit_platform(request, pk=None):
         if form.is_valid():
             serializer_data = serialize_platform_form(form)
             platform_request.put_request(serializer_data, pk)
-        return HttpResponseRedirect(reverse('platform'))
+            raw_data_platform = platform_request.get_request()
+            queryset_platform = platform_json_serializer.decode(raw_data_platform)
+            return render(request, 'game_platform/game_platform.html', {'platforms': queryset_platform})
     else:
         form = GamePlatformForm(initial=queryset_platform)
-    return render(request, 'game_platform/edit_platform.html', {'form': form})
+    return render(request, 'game_platform/edit_platform.html', {'form': form, 'pk': pk})
 
 
 def detail_view_platform(request, pk=None):
@@ -51,4 +53,6 @@ def view_platform(request):
 
 def delete_platform(request, pk=None):
     platform_request.delete_request(pk)
-    return HttpResponseRedirect(reverse('platform'))
+    raw_data_platform = platform_request.get_request()
+    queryset_platform = platform_json_serializer.decode(raw_data_platform)
+    return render(request, 'game_platform/game_platform.html', {'platforms': queryset_platform})
