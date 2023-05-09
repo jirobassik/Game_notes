@@ -23,7 +23,9 @@ def add_game(request):
         if form.is_valid():
             serializer_data = serialize_game_form(form)
             game_request.post_request(serializer_data)
-            return HttpResponseRedirect(reverse('game'))
+            raw_data = game_request.get_request()
+            queryset = game_json_serializer.decode(raw_data)
+            return render(request, 'game/game.html', {'games': queryset})
     else:
         form = GameForm()
     return render(request, 'game/create_game.html', {'form': form})
@@ -32,7 +34,10 @@ def add_game(request):
 def view_game(request):
     raw_data = game_request.get_request()
     queryset = game_json_serializer.decode(raw_data)
-    return render(request, 'game/game.html', {'games': queryset})
+    if request.htmx:
+        print('htmx_render')
+        return render(request, 'game/game.html', {'games': queryset})
+    return render(request, 'game/game_htmx.html', {'games': queryset})
 
 
 def detail_view_game(request, pk=None):
@@ -49,12 +54,16 @@ def edit_game(request, pk=None):
         if form.is_valid():
             serializer_data = serialize_game_form(form)
             game_request.put_request(serializer_data, pk)
-            return HttpResponseRedirect(reverse('game'))
+            raw_data = game_request.get_request()
+            queryset = game_json_serializer.decode(raw_data)
+            return render(request, 'game/game.html', {'games': queryset})
     else:
         form = GameForm(initial=queryset)
-    return render(request, 'game/edit_game.html', {'form': form})
+    return render(request, 'game/edit_game.html', {'form': form, 'pk': pk})
 
 
 def delete_game(request, pk=None):
     game_request.delete_request(pk)
-    return HttpResponseRedirect(reverse('game'))
+    raw_data = game_request.get_request()
+    queryset = game_json_serializer.decode(raw_data)
+    return render(request, 'game/game.html', {'games': queryset})

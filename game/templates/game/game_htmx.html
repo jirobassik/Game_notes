@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block style %}{% static 'game/css/game.css' %}{% endblock %}
+
+{% block content_main %}
+    <div id="game_view">
+        {% include 'game/game.html' %}
+    </div>
+{% endblock %}

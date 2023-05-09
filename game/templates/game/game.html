@@ -1,53 +1,50 @@
-{% extends 'layout.html' %}
-{% load static %}
 {% load rest_framework %}
 {% load custom_tag %}
 {% load cache %}
-{% block style %}{% static 'game/css/game.css' %}{% endblock %}
 
-{% block content_main %}
-    <div class="container">
-        <h1>Краткое описание игр</h1>
-        <br>
-        <div class="row row-cols-1 row-cols-md-3 g-4">
-            <a href="{% url 'create-game' %}" class="add-card">
-                {% cache 500 create %}
-                    <div class="card h-100">
-                        <div class="card-body d-flex align-items-center justify-content-center">
-                            <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
-                        </div>
+
+<div class="container">
+    <h1>Краткое описание игр</h1>
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <a hx-get="{% url 'create-game' %}" hx-target="#game_view" class="add-card">
+            {% cache 500 create %}
+                <div class="card h-100">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <i class="bi bi-plus-circle-dotted" style="font-size: 5rem; color: gray"></i>
                     </div>
-                {% endcache %}
-            </a>
-            {% for game in games %}
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ game.name }}</h5>
-                            <p class="card-text">{{ game.description|truncatewords:5 }}</p>
-                            {% with game_genres=game.genres %}
-                                {% if game_genres %}
-                                    {% view_genre game_genres as list_genres %}
-                                    <p class="card-text"><small class="text-muted">
-                                        {% for genre in list_genres %}
-                                            <span>{{ genre }}{% if not forloop.last %}, {% endif %}</span>
-                                        {% endfor %}
-                                    </small></p>
-                                {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="card-footer">
-                            <div class="btn-group">
-                                <a href="{% url 'game-delete' game.id %}" class="btn btn-outline-danger"><i
-                                        class="bi bi-trash2-fill"></i></a>
-                                <a href="{% url 'game-edit' game.id %}" class="btn btn-outline-secondary"><i
-                                        class="bi bi-pencil-fill"></i></a>
-                                <a href="{% url 'game-view' game.id %}" class="btn btn-outline-secondary">Подробнее</a>
-                            </div>
+                </div>
+            {% endcache %}
+        </a>
+        {% for game in games %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ game.name }}</h5>
+                        <p class="card-text">{{ game.description|truncatewords:5 }}</p>
+                        {% with game_genres=game.genres %}
+                            {% if game_genres %}
+                                {% view_genre game_genres as list_genres %}
+                                <p class="card-text"><small class="text-muted">
+                                    {% for genre in list_genres %}
+                                        <span>{{ genre }}{% if not forloop.last %}, {% endif %}</span>
+                                    {% endfor %}
+                                </small></p>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group">
+                            <a hx-delete="{% url 'game-delete' game.id %}" hx-target="#game_view"
+                               class="btn btn-outline-danger"><i
+                                    class="bi bi-trash2-fill"></i></a>
+                            <a hx-get="{% url 'game-edit' game.id %}" hx-target="#game_view" class="btn btn-outline-secondary"><i
+                                    class="bi bi-pencil-fill"></i></a>
+                            <a hx-get="{% url 'game-view' game.id %}" hx-target="#game_view" class="btn btn-outline-secondary">Подробнее</a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
-{% endblock %}
+</div>

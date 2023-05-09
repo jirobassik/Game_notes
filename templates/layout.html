@@ -17,17 +17,23 @@
 
     <link rel="stylesheet" type="text/css" href="{% block style %} {% endblock %}">
     <link rel="stylesheet" type="text/css" href="{% static 'game/css/top.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'game/css/create.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'game/css/view.css' %}">
+
+
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <script type="text/javascript" src="{% static 'game/js/htmx.min.js' %}" defer></script>
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 <main>
-    {% cache 500 sidebar %}
+{#    {% cache 500 sidebar %}#}
     <div class="topnav">
-        <a href="{% url 'game' %}">Игры</a>
-        <a href="{% url 'genre' %}">Жанры</a>
+        <a href="/" hx-get="{% url 'game' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Игры</a>
+        <a href="genre/" hx-get="{% url 'genre_view_game' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Жанры</a>
         <a href="{% url 'platform' %}">Платформы</a>
         <a href="{% url 'price' %}">Цена</a>
     </div>
-    {% endcache %}
+{#    {% endcache %}#}
     {% block content_main %}
     {% endblock %}
 </main>

@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block style %}{% static 'genre/css/genre.css' %}{% endblock %}
+
+{% block content_main %}
+    <div id="genre_view">
+        {% include 'genre/genre.html' %}
+    </div>
+{% endblock %}

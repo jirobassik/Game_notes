@@ -1,17 +1,10 @@
-{% extends 'layout.html' %}
-
-{% load static %}
-
-{% block title %}Добавление игры{{ title }}{% endblock %}
-{% block style %}{% static 'genre/css/create.css' %}{% endblock %}
-
-{% block content_main %}
-        <form method="POST" class="game-form">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                {{ field.label_tag }}  {{ field }} <span class="errorlist">{{ field.errors }}</span>
-            {% endfor %}
-            <button class="btn btn-success" type="submit">Изменить жанр</button>
-        </form>
-{% endblock %}
+<form method="POST" class="game-form">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        {{ field.label_tag }}  {{ field }} <span class="errorlist">{{ field.errors }}</span>
+    {% endfor %}
+    <button hx-post="{% url 'genre_view_game_edit' pk %}" hx-target="#game_view" class="btn btn-success" type="submit">
+        Изменить жанр
+    </button>
+</form>
