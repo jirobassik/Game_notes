@@ -28,10 +28,10 @@
 <main>
     {% cache 500 sidebar %}
     <div class="topnav">
-        <a href="/" hx-get="{% url 'game' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Игры</a>
-        <a href="/" hx-get="{% url 'genre' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Жанры</a>
-        <a href="/" hx-get="{% url 'platform' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Платформы</a>
-        <a href="/" hx-get="{% url 'price' %}" hx-push-url="true" hx-target="#game_view" hx-swap="innerHTML">Цена</a>
+        <a href="/" hx-get="{% url 'game' %}" hx-target="#game_view">Игры</a>
+        <a href="/" hx-get="{% url 'genre' %}" hx-target="#game_view">Жанры</a>
+        <a href="/" hx-get="{% url 'platform' %}" hx-target="#game_view">Платформы</a>
+        <a href="/" hx-get="{% url 'price' %}" hx-target="#game_view">Цена</a>
     </div>
     {% endcache %}
     {% block content_main %}
