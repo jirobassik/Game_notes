@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
 from .forms import GameForm
 from utils.init_json_ser_req import game_json_serializer, game_request
 
@@ -35,7 +33,6 @@ def view_game(request):
     raw_data = game_request.get_request()
     queryset = game_json_serializer.decode(raw_data)
     if request.htmx:
-        print('htmx_render')
         return render(request, 'game/game.html', {'games': queryset})
     return render(request, 'game/game_htmx.html', {'games': queryset})
 
