@@ -1,19 +1,10 @@
 from django.forms import Form
 from django import forms
-from genre.models import GameGenreModel
-from genre.serializers import GenreSerializer
-from game_platform.models import GamePlatformModel
-from game_platform.serializers import GamePlatformSerializer
 
 from utils.converter_remove import convert_tuple
-from utils.request_server import Request
-from utils.json_serializer import JsonSerializer
-
-platform_json_serializer = JsonSerializer(GamePlatformModel, GamePlatformSerializer)
-genre_json_serializer = JsonSerializer(GameGenreModel, GenreSerializer)
-platform_request = Request.platform_model()
-genre_request = Request.genre_model()
-
+from utils.init_json_ser_req import platform_json_serializer, genre_request, genre_json_serializer, platform_request, \
+    game_request, game_json_serializer
+from utils.converter_remove import find_name
 
 class GameForm(Form):
     def __init__(self, *args, **kwargs):
@@ -61,3 +52,10 @@ class GameForm(Form):
     buy = forms.BooleanField(required=False, label='Куплена')
     beta = forms.BooleanField(required=False, label='Бета')
     passed = forms.BooleanField(required=False, label='Пройдена')
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        query_set_games = game_json_serializer.decode(game_request.get_request())
+        if find_name(query_set_games, name):
+            raise forms.ValidationError('Игра с таким названием уже существует')
+        return name

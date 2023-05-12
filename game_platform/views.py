@@ -17,7 +17,7 @@ def add_platform(request):
         if form.is_valid():
             serializer_data = serialize_platform_form(form)
             platform_request.post_request(serializer_data)
-        return HttpResponseRedirect(reverse('platform'))
+            return HttpResponseRedirect(reverse('platform'))
     else:
         form = GamePlatformForm()
     return render(request, 'game_platform/create_platform.html', {'form': form})

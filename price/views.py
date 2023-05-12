@@ -20,7 +20,7 @@ def add_price(request):
         if form.is_valid():
             serializer_data = serialize_price_form(form)
             price_request.post_request(serializer_data)
-        return HttpResponseRedirect(reverse('price'))
+            return HttpResponseRedirect(reverse('price'))
     else:
         form = PriceForm()
     return render(request, 'price/create_price.html', {'form': form})

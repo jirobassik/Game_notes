@@ -17,7 +17,7 @@ def add_genre(request):
         if form.is_valid():
             serializer_data = serialize_genre_form(form)
             genre_request.post_request(serializer_data)
-        return HttpResponseRedirect(reverse('genre'))
+            return HttpResponseRedirect(reverse('genre'))
     else:
         form = GameGenreForm()
     return render(request, 'genre/create_genre.html', {'form': form})
